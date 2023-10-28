@@ -1,5 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+
+import { GluestackUIStyledProvider, View, Text } from '@gluestack-ui/themed';
+import { config } from '@gluestack-ui/config';
 
 import {
   useFonts,
@@ -20,20 +22,19 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={{ fontFamily: 'Jost_400Regular' }}>
-        Open up App.js to start working on your app!
-      </Text>
+    <GluestackUIStyledProvider config={config}>
       <StatusBar style="auto" />
-    </View>
+
+      <View
+        flex={1}
+        backgroundColor="$white"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Text fontFamily="Jost_400Regular" fontSize={'$md'}>
+          Open up App.js to start working on your app!
+        </Text>
+      </View>
+    </GluestackUIStyledProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
