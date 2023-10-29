@@ -6,7 +6,7 @@ import Container from '../components/Container';
 import ProductItemWithPriceLarge from '../components/ProductItemWithPriceLarge';
 
 import { fontFamily } from '../../config';
-import { productData } from '../api/productData';
+import { products } from '../api/products';
 
 import MenuSVG from '../assets/menu.svg';
 import BagSVG from '../assets/bag.svg';
@@ -53,7 +53,7 @@ const Home = (): JSX.Element => {
           justifyContent: 'space-between',
           marginBottom: 16,
         }}
-        data={productData}
+        data={products}
         keyExtractor={(product) => product.id}
         renderItem={({ item: product }) => (
           <ProductItemWithPriceLarge
