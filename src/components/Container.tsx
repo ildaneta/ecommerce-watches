@@ -17,10 +17,13 @@ const Container = ({
   return (
     <>
       <SafeAreaView
-        style={{ paddingTop: IS_ANDROID ? STATUS_BAR_HEIGHT : 0 }}
+        style={{
+          paddingTop: IS_ANDROID ? STATUS_BAR_HEIGHT : 0,
+          backgroundColor: '#fff',
+        }}
       />
 
-      <View flex={1} pt={'$6'} px={'$4'}>
+      <View flex={1} pt={'$6'} px={'$4'} backgroundColor="$white">
         {needsScroll ? <ScrollView>{children}</ScrollView> : <>{children}</>}
       </View>
     </>
