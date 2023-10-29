@@ -1,28 +1,68 @@
 import React from 'react';
 import { View, Text } from '@gluestack-ui/themed';
-import { FlatList } from 'react-native';
+import { FlatList, TouchableOpacity } from 'react-native';
 
 import Container from '../components/Container';
 import ProductItemWithPriceLarge from '../components/ProductItemWithPriceLarge';
 
-import { fontFamily } from '../../config';
+import { colors, fontFamily } from '../../config';
 import { products } from '../api/products';
 
 import MenuSVG from '../assets/menu.svg';
 import BagSVG from '../assets/bag.svg';
 
+interface IHeaderProps {
+  hasBadge?: boolean;
+  numberOfItems?: number;
+  onPressCart: () => void;
+}
+
 const Home = (): JSX.Element => {
-  const Header = () => (
+  const Badge = ({ number }) => (
     <View
-      justifyContent="space-between"
+      position="absolute"
+      top={-2}
+      right={-4}
+      backgroundColor={colors['white.50']}
+      borderRadius={30}
       alignItems="center"
+      justifyContent="center"
+      w={21}
+      h={21}
+      zIndex={1}
       flexDirection="row"
     >
-      <MenuSVG />
-
-      <BagSVG />
+      <Text fontFamily={fontFamily.semiBold} fontSize={'$xs'} color="$light700">
+        {number}
+      </Text>
     </View>
   );
+
+  const Header = ({ hasBadge, numberOfItems, onPressCart }: IHeaderProps) => {
+    const Cart = () => (
+      <View>
+        {hasBadge && <Badge number={numberOfItems} />}
+
+        <View pr={'$1'}>
+          <BagSVG />
+        </View>
+      </View>
+    );
+
+    return (
+      <View
+        justifyContent="space-between"
+        alignItems="center"
+        flexDirection="row"
+      >
+        <MenuSVG />
+
+        <TouchableOpacity activeOpacity={0.8} onPress={onPressCart}>
+          <Cart />
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
   const Title = () => (
     <Text
@@ -37,7 +77,7 @@ const Home = (): JSX.Element => {
 
   return (
     <Container>
-      <Header />
+      <Header onPressCart={() => console.log('press')} />
 
       <View mb={'$6'} />
 
