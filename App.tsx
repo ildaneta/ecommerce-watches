@@ -9,7 +9,8 @@ import {
   Jost_500Medium,
   Jost_600SemiBold,
 } from '@expo-google-fonts/jost';
-import Home from './src/screens/Home';
+
+import { Routes } from './src/routes';
 
 export default function App() {
   let [fontsLoaded, fontError] = useFonts({
@@ -24,9 +25,9 @@ export default function App() {
 
   return (
     <GluestackUIStyledProvider config={config}>
-      <StatusBar style="auto" />
+      <StatusBar style="dark" />
 
-      <Home />
+      <Routes />
     </GluestackUIStyledProvider>
   );
 }
