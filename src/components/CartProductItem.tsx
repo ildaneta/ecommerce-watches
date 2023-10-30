@@ -46,15 +46,15 @@ const CartProductItem = ({
         >
           {price}
         </Text>
-
-        <TouchableOpacity
-          activeOpacity={0.7}
-          style={{ position: 'absolute', bottom: 10, right: -100 }}
-          onPress={onPressDelete}
-        >
-          <TrashSVG />
-        </TouchableOpacity>
       </View>
+
+      <TouchableOpacity
+        activeOpacity={0.7}
+        style={{ position: 'absolute', bottom: 10, right: 10 }}
+        onPress={onPressDelete}
+      >
+        <TrashSVG />
+      </TouchableOpacity>
     </View>
   );
 };
