@@ -6,10 +6,15 @@ import Container from '../components/Container';
 import ProductItemWithPriceLarge from '../components/ProductItemWithPriceLarge';
 
 import { colors, fontFamily } from '../../config';
-import { products } from '../api/products';
 
 import MenuSVG from '../assets/menu.svg';
 import BagSVG from '../assets/bag.svg';
+
+import { useProductCartStore } from '../stores/productCart';
+
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { StackRoutes } from '../routes/stack';
 
 interface IHeaderProps {
   hasBadge?: boolean;
@@ -18,6 +23,10 @@ interface IHeaderProps {
 }
 
 const Home = (): JSX.Element => {
+  const { availableItems, addToCart, cart } = useProductCartStore();
+  const { navigate } =
+    useNavigation<NativeStackNavigationProp<StackRoutes, 'home'>>();
+
   const Badge = ({ number }) => (
     <View
       position="absolute"
@@ -77,7 +86,15 @@ const Home = (): JSX.Element => {
 
   return (
     <Container>
-      <Header onPressCart={() => console.log('press')} />
+      <Header
+        onPressCart={() => {
+          if (cart.length >= 1) {
+            navigate('cart');
+          }
+        }}
+        numberOfItems={cart.length}
+        hasBadge={cart.length >= 1}
+      />
 
       <View mb={'$6'} />
 
@@ -93,14 +110,14 @@ const Home = (): JSX.Element => {
           justifyContent: 'space-between',
           marginBottom: 16,
         }}
-        data={products}
+        data={availableItems}
         keyExtractor={(product) => product.id}
         renderItem={({ item: product }) => (
           <ProductItemWithPriceLarge
             image={product.image}
             label={product.name}
-            price={product.price}
-            onPress={() => console.log(product)}
+            price={`$ ${product.price}`}
+            onPress={() => addToCart(product)}
           />
         )}
       />
