@@ -2,18 +2,18 @@ import React from 'react';
 import { View, Text } from '@gluestack-ui/themed';
 
 import TrashSVG from '../assets/trash.svg';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, Image } from 'react-native';
 import { colors, fontFamily } from '../../config';
 
 interface ICartProductItemProps {
-  image: any;
+  image: string;
   name: string;
   price: string;
   onPressDelete: () => void;
 }
 
 const CartProductItem = ({
-  image: ImageComponent,
+  image,
   name,
   price,
   onPressDelete,
@@ -26,7 +26,7 @@ const CartProductItem = ({
         borderRadius={'$2xl'}
         mr={'$4'}
       >
-        <ImageComponent />
+        <Image source={{ uri: image }} width={76} height={133} />
       </View>
 
       <View>
