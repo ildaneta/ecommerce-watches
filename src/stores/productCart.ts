@@ -1,6 +1,9 @@
 import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
+
 import { products } from '../api/products';
 import { ProductItem } from '../types/product';
+import MMKVStorage from '../mmkv/zustandStorage';
 
 type CartState = {
   cart: ProductItem[];
@@ -18,25 +21,35 @@ const initialState = {
   availableItems: products,
 };
 
-export const useProductCartStore = create<CartState & Actions>()((set) => ({
-  ...initialState,
+const storeName = '@ecommerce:product-cart-store';
 
-  addToCart: (products) => {
-    set((state) => ({
-      cart: [...state.cart, products],
-    }));
-  },
+export const useProductCartStore = create<CartState & Actions>()(
+  persist(
+    (set) => ({
+      ...initialState,
 
-  setAvailableItems: (products) => {
-    set((state) => ({
-      ...state,
-      availableItems: products,
-    }));
-  },
+      addToCart: (products) => {
+        set((state) => ({
+          cart: [...state.cart, products],
+        }));
+      },
 
-  removeFromCart: (id) => {
-    set((state) => ({
-      cart: state.cart.filter((product) => product.id !== id),
-    }));
-  },
-}));
+      setAvailableItems: (products) => {
+        set((state) => ({
+          ...state,
+          availableItems: products,
+        }));
+      },
+
+      removeFromCart: (id) => {
+        set((state) => ({
+          cart: state.cart.filter((product) => product.id !== id),
+        }));
+      },
+    }),
+    {
+      name: storeName,
+      storage: createJSONStorage(() => MMKVStorage(storeName)),
+    }
+  )
+);
