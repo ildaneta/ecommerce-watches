@@ -1,18 +1,18 @@
 import React from 'react';
 import { View, Text } from '@gluestack-ui/themed';
-import { TouchableOpacity, useWindowDimensions } from 'react-native';
+import { TouchableOpacity, useWindowDimensions, Image } from 'react-native';
 
 import { colors, fontFamily } from '../../config';
 
 interface IProductItemWithPriceLargeProps {
-  image: any;
+  image: string;
   label: string;
   price: string;
   onPress: () => void;
 }
 
 const ProductItemWithPriceLarge = ({
-  image: ImageComponent,
+  image,
   label,
   price,
   onPress,
@@ -30,7 +30,7 @@ const ProductItemWithPriceLarge = ({
       alignItems="center"
     >
       <View alignSelf="center">
-        <ImageComponent />
+        <Image source={{ uri: image }} width={76} height={133} />
       </View>
 
       <Text

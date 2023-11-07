@@ -63,6 +63,18 @@ const Cart = (): JSX.Element => {
     </View>
   );
 
+  const BottomPriceCounterComponent = () => (
+    <>
+      <Divider backgroundColor={colors['white.50']} />
+
+      <View mb={30} />
+
+      <ItemsCounterAndPrice />
+
+      <View mb={40} />
+    </>
+  );
+
   return (
     <Container>
       <HeaderNavigation onPress={() => goBack()} />
@@ -83,20 +95,22 @@ const Cart = (): JSX.Element => {
               />
             )}
             ItemSeparatorComponent={() => <View mt={10} />}
+            contentContainerStyle={{ paddingBottom: 30 }}
+            showsVerticalScrollIndicator={false}
           />
 
-          <Divider backgroundColor={colors['white.50']} />
-
-          <View mb={30} />
-
-          <ItemsCounterAndPrice />
-
-          <View mb={40} />
+          <BottomPriceCounterComponent />
         </>
       ) : (
-        <View alignItems="center">
-          <Text>Your cart is empty</Text>
-        </View>
+        <>
+          <View alignItems="center">
+            <Text>Your cart is empty</Text>
+          </View>
+
+          <View position="absolute" bottom={0} w="$full" right={14}>
+            <BottomPriceCounterComponent />
+          </View>
+        </>
       )}
     </Container>
   );
